@@ -1,0 +1,109 @@
+package br.com.fiap;
+
+import java.util.Arrays;
+
+public class Tabuleiro {
+
+	private String[][] tabuleiro = new String[8][8];
+	private int pontuacaoJogador1;
+	private int pontuacaoJogador2;
+
+	// MONTA O TABULEIRO COM AS PEÇAS
+	public void montarTabuleiro() {
+
+		for (int row = 0; row < tabuleiro.length; row++) {
+			for (int col = 0; col < tabuleiro.length; col++) {
+
+				// VAZIO
+				if ((row + col) % 2 != 0)
+					tabuleiro[row][col] = " ";
+
+				// PEDRA BRANCA
+				if ((row + col) % 2 != 0 && row >= 0 && row <= 2)
+					tabuleiro[row][col] = "B";
+
+				// PEDRA PRETA
+				if ((row + col) % 2 != 0 && row >= 5 && row <= 7)
+					tabuleiro[row][col] = "P";
+
+				if ((row + col) % 2 == 0) {
+					tabuleiro[row][col] = "-";
+				}
+
+			}
+
+		}
+	}
+
+	// MOVE AS PEÇAS TANTO PRETAS QUANTO BRANCAS ( NAO DAMAS)
+	public boolean moverPedra(int xIn, int yIn, int xOut, int yOut) {
+		// VALIDAR MOVIMENTAÇÃO VERTICAL | VALIDA MOVIMENTAÇÃO HORIZONTAL |
+		// VALIDA SE PESSA A SER MOVIDA EXISTE
+		if ((xOut == xIn + 1 || xOut == xIn - 1) && (yOut == yIn + 1 || yOut == yIn - 1)
+				&& (tabuleiro[xIn][yIn] != " ")) {
+					
+			//VALIDAÇÃO PARA COMER PEÇA BRANCA DIRETA 			
+			if(tabuleiro[xOut][yOut] == "B"  && (tabuleiro[xOut-1][yOut+1] == " "  )){
+				//COMER PEÇA
+				tabuleiro[xIn+2][yIn+2] = "P";
+				tabuleiro[xOut][yOut] = " ";
+				pontuacaoJogador1++;
+			}
+			//VALIDAÇÃO PARA COMER PEÇA BRANCA ESQUERDA	
+			else if(tabuleiro[xOut][yOut] == "B"  && (tabuleiro[xOut+1][yOut+1] == " "  )){
+				//COMER PEÇA & PONTUAR
+				tabuleiro[xIn-2][yIn+2] = "P";
+				tabuleiro[xOut][yOut] = " ";
+				pontuacaoJogador1++;
+			
+			}
+			
+			else{
+
+				// TROCA POSIÇÃO DA PEDRA 1(BRANCA)
+				if (tabuleiro[xIn][yIn] == "B") {
+
+				tabuleiro[xIn][yIn] = " ";
+				tabuleiro[xOut][yOut] = "B";
+				}
+				// TROCA POSIÇÃO DA PEDRA 2(PRETA)
+				else {
+				tabuleiro[xIn][yIn] = " ";
+				tabuleiro[xOut][yOut] = "P";
+
+				}
+						
+			}	
+
+			return true;
+		}
+		return false;
+		}
+	}
+
+	public String[][] getTabuleiro() {
+		return tabuleiro;
+	}
+
+	public void setTabuleiro(String[][] tabuleiro) {
+		this.tabuleiro = tabuleiro;
+	}
+
+	public void exibirTabuleiro() {
+		for (int i = 0; i < tabuleiro.length; i++) {
+			if (i == 0) {
+				System.out.print("   A  B  C  D  E  F  G  H ");
+			}
+			System.out.println("");
+			for (int j = 0; j < tabuleiro.length; j++) {
+				if (j == 0)
+					System.out.print(i + 1 + " ");
+
+				System.out.print("[" + tabuleiro[i][j] + "]");
+
+			}
+
+		}
+
+	}
+}
