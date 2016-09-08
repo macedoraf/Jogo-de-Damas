@@ -1,0 +1,45 @@
+
+package br.com.fiap;
+
+import java.util.Scanner;
+
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane.MoveAction;
+
+public class Main {
+
+	public static void main(String[] args) {
+		Scanner entrada = new Scanner(System.in);
+		Tabuleiro tabuleiro = new Tabuleiro();
+		tabuleiro.montarTabuleiro();
+	
+		
+		tabuleiro.exibirTabuleiro();
+		
+		System.out.println("");
+		System.out.println("Informe um movimento seguido por Y, X, Lugar desejado Y, Lugar desejado X");
+		
+		int xIn = entrada.nextInt();
+		int yIn = entrada.nextInt();
+		int xOut = entrada.nextInt();
+		int yOut = entrada.nextInt();
+
+		if (tabuleiro.moverPedra(xIn, yIn, xOut, yOut)) {			
+			
+			
+			tabuleiro.exibirTabuleiro();
+
+				}
+
+			
+		else {
+			System.out.println("Não inserido com sucesso!");
+
+			
+
+				}
+			}
+
+
+}
+
+
